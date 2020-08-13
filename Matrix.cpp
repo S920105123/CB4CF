@@ -1,61 +1,57 @@
 struct Matrix {
 	int n;
 	static const int SIZE = 2;
-	LL v[SIZE][SIZE];
+	vector<vector<LL>> v;
 	
+	// Handle empty matrix by yourself, many place will RE.
+	// This is a very slow template
 	Matrix(){ assert(0); /* GIVE SIZE!!*/ }
-	Matrix(int _n) {
-		n = _n;
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				v[i][j] = 0;
-			}
-		}
+	Matrix(int _n, int _m) {
+		v = vector<vector<LL>>(_n, vector<LL>(_m, 0));
 	}
 	Matrix(const Matrix &m) {
-		n = m.n;
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				v[i][j] = m.v[i][j];
-			}
-		}
+		v = m.v;
 	}
-	LL* operator [] (int idx) {
+	int size() {
+		return v.size();
+	}
+	vector<LL>& operator [] (int idx) {
 		return v[idx];
 	}
 	static Matrix unit(int n) {
-		Matrix m(n);
+		Matrix res(n, n);
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
-				m.v[i][j] = (i == j);
-			}
-		}
-		return m;
-	}
-	Matrix operator + (Matrix m) {
-		Matrix res(n);
-		assert(n == m.n);
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				res[i][j] = (v[i][j] + m[i][j]) % MOD;
+				res.v[i][j] = (i == j); // 0 here, for (+, min), others INF
 			}
 		}
 		return res;
 	}
-	Matrix operator * (Matrix m) {
-		Matrix res(n);
-		assert(n == m.n);
+	Matrix operator + (Matrix &mat) {
+		int n = v.size(), m = v[0].size();
+		Matrix res(n, m);
 		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				for (int k = 0; k < n; k++) {
-					res[i][j] = (res[i][j] + v[i][k] * m[k][j]) % MOD;
+			for (int j = 0; j < m; j++) {
+				res[i][j] = (v[i][j] + mat[i][j]) % MOD;
+			}
+		}
+		return res;
+	}
+	Matrix operator * (Matrix &mat) {
+		int n = v.size(), p = v[0].size(), m = mat[0].size();
+		assert(mat.size() == p);
+		Matrix res(n, m);
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				for (int k = 0; k < p; k++) {
+					res[i][j] = (res[i][j] + v[i][k] * mat[k][j]) % MOD;
 				}
 			}
 		}
 		return res;
 	}
 	Matrix power(LL pw) {
-		Matrix res = unit(n), m = *this;
+		Matrix res = unit(v.size()), m = *this;
 		while (pw) {
 			if (pw & 1) res = res * m;
 			m = m * m;
@@ -64,4 +60,3 @@ struct Matrix {
 		return res;
 	}
 };
-
