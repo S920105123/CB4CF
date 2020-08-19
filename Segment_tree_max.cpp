@@ -2,7 +2,10 @@
 struct Segment_tree {
 	static const int RANGE = MAXN; // here
 	struct Node {
-		LL val = 0, add = 0;
+		LL val, add;
+		Node() {
+			val = add = 0;
+		}
 	} t[4*RANGE];
 	
 	// Assume add = 0 when unite.
