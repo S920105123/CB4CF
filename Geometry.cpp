@@ -1,5 +1,5 @@
 struct Point {
-	LL x, y;
+	LL x, y; // When you want to add id, modify COPY constructor!!
 	Point() { x = y = 0; }
 	Point(LL _x, LL _y) : x(_x), y(_y) {}
 	Point(const Point &p) { x = p.x; y = p.y; }
@@ -17,6 +17,9 @@ struct Point {
 	}
 	LL dot(Point p) const {
 		return (LL) x * p.x + (LL) y * p.y;
+	}
+	double angle(Point p) const {
+		return atan2(cross(p), dot(p));
 	}
 	int quadrant() const {
 		// return 1 or 2 or 3 or 4

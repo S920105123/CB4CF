@@ -31,9 +31,10 @@ LL H(LL n, LL k) {
 }
 
 /*
-pair<LL, LL> exd_gcd( LL a, LL b) {
+pair<LL, LL> ext_gcd( LL a, LL b) {
+	if (b == 0) return make_pair(1, 0);
     if (a % b == 0) return make_pair(0, 1);
-    pair<LL, LL> t = exd_gcd(b, a % b);
+    pair<LL, LL> t = ext_gcd(b, a % b);
     return make_pair( t.second, t.first - a / b * t.second);
 }
 LL mod_inv(LL x, LL mod) { // gcd(x,mod) must be 1
