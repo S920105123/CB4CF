@@ -1,5 +1,6 @@
 template<class T> struct Dinic {
 	static const int MAXV = 210;
+	static const int INF = (LL)1e9 + 5;
 	struct Edge{
 	    int f,to,rev;
 	    T c;
@@ -68,11 +69,29 @@ template<class T> struct Dinic {
 	    while(BFS(s,t)){
 	        while(true) {
 	        	for (int i = 0; i < n; i++) cur[i] = 0;
-	            T temp = DFS(s,INF);
+	            T temp = DFS(s, INF);
 	            if(temp==0) break;
 	            ans += temp;
 	        }
 	    }
 	    return ans;
+	}
+	
+	vector<bool> min_cut(int s) {
+	    vector<bool> visited(n);
+	    queue<int> que;
+	    que.push(s);
+	    while (!que.empty()) {
+	        int p = que.front();
+	        que.pop();
+	        visited[p] = true;
+	        for (auto e : G[p]) {
+	            if (e.c && !visited[e.to]) {
+	                visited[e.to] = true;
+	                que.push(e.to);
+	            }
+	        }
+	    }
+	    return visited;
 	}
 };
