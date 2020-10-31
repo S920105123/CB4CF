@@ -1,6 +1,4 @@
 struct Matrix {
-	int n;
-	static const int SIZE = 2;
 	vector<vector<LL>> v;
 	
 	// Handle empty matrix by yourself, many place will RE.
