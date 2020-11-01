@@ -7,7 +7,7 @@ struct DSU {
 		}
 	}
 	int find(int x) {
-		return x == pa[x] ? x : x = find(pa[x]);
+		return x == pa[x] ? x : find(pa[x]); // Add compression by yourself
 	}
 	int merge(int x, int y) {
 		x = find(x); y = find(y);
