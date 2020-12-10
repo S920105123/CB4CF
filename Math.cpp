@@ -1,12 +1,16 @@
-LL qpow(LL a, LL pw) {
+LL qpow(LL a, LL pw, LL mod) {
 	LL res = 1;
-	a %= MOD;
+	a %= mod;
 	while (pw) {
-		if (pw & 1) res = res * a % MOD;
-		a = a * a % MOD;
+		if (pw & 1) res = res * a % mod;
+		a = a * a % mod;
 		pw >>= 1;
 	}
 	return res;
+}
+LL mod_inv(LL a, LL mod) {
+	// for prime
+	return qpow(a, mod - 2, mod);
 }
  
 /* fac, C, H */
@@ -17,7 +21,7 @@ void init() {
 	fac[0] = finv[0] = 1;
 	for (int i = 1; i < LIM; i++) {
 		fac[i] = fac[i - 1] * i % MOD;
-		finv[i] = qpow(fac[i], MOD - 2);
+		finv[i] = qpow(fac[i], MOD - 2, MOD);
 	}
 }
 
