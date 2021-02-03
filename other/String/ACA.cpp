@@ -6,7 +6,7 @@ int n, dep[MAXL], link[MAXL], next[MAXL][SIGMA];
 int trie[MAXL][SIGMA], tag[MAXL], nocc[MAXL];
 
 int new_node(int p) {
-	// Add you init if recording more values.
+	// Add your init if recording more values.
 	dep[n] = n == 0 ? 0 : dep[p] + 1;
 	link[n] = tag[n] = nocc[n] = -1;
 	for (int i = 0; i < SIGMA; i++) {
