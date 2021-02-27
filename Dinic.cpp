@@ -1,6 +1,6 @@
 template<class T> struct Dinic {
-	static const int MAXV = 210;
-	static const int INF = (LL)1e9 + 5;
+//	static const int MAXV = MAXN*MAXN;
+//	static const int FINF = (LL)1e9 + 5; // > max flow ==> ok
 	struct Edge{
 	    int f,to,rev;
 	    T c;

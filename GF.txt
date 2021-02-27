@@ -1,0 +1,13 @@
+1. Binomial generating function (see wiki for more)
+\sum i=0~n: i^k C(n, i)
+=> (1 + x)^n = \sum i=0~n: C(n, i) => differentiate.
+
+Note that (px + q) generate binomial distribution terms.
+
+2. exponential generating function
+How many ways are there to make a string of length n using the
+letters a, b, and c, such that there are an odd number of a’s and an even number
+of b’s?
+
+3. Geometric
+\sum n=0~\infty(ax)^b: (ax)^n = 1/(1-ax) => differentiate
