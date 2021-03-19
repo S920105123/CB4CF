@@ -32,7 +32,7 @@ LL H(LL n, LL k) {
 	return C(n + k - 1, k);
 }
 
-// extgcd
+// extgcd & CRT
 pair<LL, LL> ext_gcd( LL a, LL b) {
 	if (b == 0) return make_pair(1, 0);
     if (a % b == 0) return make_pair(0, 1);
@@ -46,10 +46,11 @@ LL mod_inv(LL x, LL mod) { // gcd(x,mod) must be 1
     return (exd_gcd(x,mod).first % mod + mod) % mod;
 }
 */
-// CRT
+
+// CRT, O(n lg C)
 // no solution ==> (0, 0); input size = 0 ==> (0, 1)
 // otherwise, solution x = y (mod z), z = LCM(m[i]) ==> return (y, z)
-std::pair<long long, long long> CRT(const std::vector<long long>& r,
+std::pair<long long, long long> crt(const std::vector<long long>& r,
                                     const std::vector<long long>& m) {
     assert(r.size() == m.size());
     int n = int(r.size());
