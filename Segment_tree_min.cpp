@@ -1,7 +1,7 @@
 // Default (add, set, min) = (update, point_update, query)
 struct Segment_tree {
-	static const int RANGE = MAXN; // here
-	static const int NO_TAG = 0; // here
+//	static const int RANGE = MAXN; // here
+//	static const int NO_TAG = 0; // here
 	struct Node {
 		LL val, tag;
 		Node() { // here

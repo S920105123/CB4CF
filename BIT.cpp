@@ -1,10 +1,11 @@
 struct BIT {
-	LL c[MAXN];
+//	const int RANGE = MAXN;
+	LL c[RANGE];
 	void init(int n) {
 		fill(c, c + n + 1, 0);
 	}
 	void add(int p, LL v) {
-		while (p < MAXN) {
+		while (p < RANGE) {
 			c[p] += v;
 			p += p & -p;
 		}
