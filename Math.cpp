@@ -10,6 +10,7 @@ LL qpow(LL a, LL pw, LL mod) {
 }
 LL mod_inv(LL a, LL mod) {
 	// for prime
+	a %= mod;
 	return qpow(a, mod - 2, mod);
 }
  

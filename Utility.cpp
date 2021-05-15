@@ -8,3 +8,15 @@ pair<map<int, int>, vector<int>> number_to_order(vector<int> vec) {
 	}
 	return {trans, vec};
 }
+
+ll ifloor(ll a, ll b){
+    if(b < 0) a *= -1, b *= -1;
+    if(a < 0) return (a - b + 1) / b;
+    else return a / b;
+}
+ 
+ll iceil(ll a, ll b){
+    if(b < 0) a *= -1, b *= -1;
+    if(a > 0) return (a + b - 1) / b;
+    else return a / b;
+} 

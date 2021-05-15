@@ -10,7 +10,8 @@ pair<LL, LL> ext_gcd( LL a, LL b) {
 // LL g = __gcd(a, b), t1 = a / g, t2 = b / g; // in case you want to enumerate all
 /* gcd based inv
 LL mod_inv(LL x, LL mod) { // gcd(x,mod) must be 1
-    return (exd_gcd(x,mod).first % mod + mod) % mod;
+	x %= mod;
+    return (ext_gcd(x,mod).first % mod + mod) % mod;
 }
 */
 
