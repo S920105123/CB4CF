@@ -15,7 +15,7 @@ LL mod_inv(LL a, LL mod) {
 }
  
 /* fac, C, H */
-const int LIM = 100; // Double for H(n, k)
+const int LIM = 1000000; // Double for H(n, k)
 LL fac[LIM], finv[LIM];
 void init_fac(LL mod) {
 	fac[0] = finv[0] = 1;

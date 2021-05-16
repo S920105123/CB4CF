@@ -69,7 +69,7 @@ template<class T> struct Dinic {
 	    while(BFS(s,t)){
 	        while(true) {
 	        	for (int i = 0; i < n; i++) cur[i] = 0;
-	            T temp = DFS(s, INF);
+	            T temp = DFS(s, FINF);
 	            if(temp==0) break;
 	            ans += temp;
 	        }
