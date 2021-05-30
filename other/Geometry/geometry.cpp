@@ -1,32 +1,45 @@
 #include <bits/stdc++.h>
 using namespace std;
-const double PI=acos(-1);
+const double PI = acos(-1);
 
+template<class T>
 struct Point {
-	double x,y;
-	double cross(const Point &v) const {
-		return x*v.y-y*v.x;
+	T x, y;
+	Point() { x = y = 0; }
+	Point(T _x, T _y) { x = _x; y = _y; }
+	Point<T> operator - (const Point &p) const {
+		return Point(x - p.x, y - p.y);
 	}
-	double dot(const Point &v) const {
-		return x*v.x+y*v.y;
+	Point<T> operator + (const Point &p) const {
+		return Point(x + p.x, y + p.y);
+	}
+	Point<T> operator * (T mul) const {
+		return Point(m * x, m * y);
+	}
+	T cross(const Point<T> &v) const {
+		return x * v.y - y * v.x;
+	}
+	T dot(const Point &v) const {
+		return x * v.x + y * v.y;
 	}
 	Point normal() { // Normal vector to the left
-		return {-y,x};
+		return {-y, x};
 	}
 	double angle(const Point &v) const {
-		// Angle from *this to v in [-pi,pi].
-		double ang = atan2(cross(v),dot(v));
+		// Angle from *this to v in [0, 2 * pi].
+		double ang = atan2(cross(v), dot(v));
 		return ang < 0 ? ang + PI * 2 : ang;
 	}
-	double getA()const{//angle to x-axis
-		T A=atan2(y,x);//<0 when exceed PI
-		if(A<=-PI/2)A+=PI*2;
+	double getA() const { //angle to x-axis
+		double A = atan2(y, x); // < 0 when exceed PI
+		if (A <= -PI / 2) A += PI * 2;
 		return A;
 	}
 	Point rotate_about(double theta, const Point &p) const {
 		// Rotate this point conterclockwise by theta about p
-		double nx=x-p.x,ny=y-p.y;
-		return {nx*cos(theta)-ny*sin(theta)+p.x,nx*sin(theta)+ny*cos(theta)+p.y};
+		// ONLY WORKS FOR T = DOUBLE
+		double nx = x - p.x, ny = y - p.y;
+		return {nx * cos(theta) - ny * sin(theta) + p.x, nx * sin(theta)+ ny * cos(theta)+p.y};
 	}
 };
 
