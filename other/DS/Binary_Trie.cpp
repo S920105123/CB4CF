@@ -1,58 +1,90 @@
-const int LOG = 30;
-struct Node {
-	int sz;
-	Node *ch[2];
-	Node() {
-		sz = 0;
-		ch[0] = ch[1] = nullptr;
+struct BTrie {
+//	static const int LOG = 30;
+//	static const int MAXT = LOG * MAXN;
+	
+	struct Node {
+		int sz;
+		Node *ch[2];
+		Node() {
+			sz = 0;
+			ch[0] = ch[1] = nullptr;
+		}
+	};
+	
+	int ptr;
+	Node *root;
+	Node N[MAXT];
+	
+	Node* new_node() {
+		N[ptr] = Node();
+		return &N[ptr++];
 	}
-	static get_size(Node *d) {
-		return d == nullptr ? 0 : d->sz;
+	
+	BTrie() { root = NULL; ptr = 0; }
+	
+	void init() {
+		ptr = 0;
+		root = new_node();
 	}
-	void insert(int x) {
-		Node *cur = *this;
+	
+	void insert(int key) {
+		Node *cur = root;
 		for (int i = LOG - 1; i >= 0; i--) {
-			int to = x >> i & 1;
+			int to = key >> i & 1;
 			cur->sz++;
-			if (root->ch[to] == nullptr) {
-				cur->ch[to] = new Node();
+			if (cur->ch[to] == nullptr) {
+				cur->ch[to] = new_node();
 			}
 			cur = cur->ch[to];
 		}
-		root->sz++;
+		cur->sz++;
 	}
-	void find(int x) {
-		Node *cur = *this;
+	
+	int find(int key) {
+		Node *cur = root;
 		for (int i = LOG - 1; i >= 0; i--) {
-			int to = x >> i & 1;
-			if (root->ch[to] == nullptr) {
+			int to = key >> i & 1;
+			if (cur->ch[to] == nullptr) {
 				return 0;
 			}
 			cur = cur->ch[to];
 		}
 		return 1;
 	}
-	int erase(int x) {
-		if (!find(x)) return 0;
-		Node *cur = *this;
+	
+	int erase(int key) {
+		Node *cur = root;
 		for (int i = LOG - 1; i >= 0; i--) {
-			int to = x >> i & 1;
+			int to = key >> i & 1;
 			cur->sz--;
 			cur = cur->ch[to];
 		}
-		root->sz--;
+		cur->sz--;
 		return 1;
 	}
-	int max_xor(int x) {
-		// maximum value of x ^ (some value in trie)
-		Node *cur = *this;
+	
+	int min_xor(int key) {
+		// minimum value of key ^ (some value in trie)
+		int mask = key;
+		Node *cur = root;
+		assert(get_size(root) > 0);
 		for (int i = LOG - 1; i >= 0; i--) {
-			int to = (x >> i & 1) ^ 1;
+			int to = key >> i & 1;
 			if (get_size(cur->ch[to]) == 0) {
 				to ^= 1;
 			}
-			x ^= to << i;
+			mask ^= to << i;
+			cur = cur->ch[to];
 		}
-		return x;
+		return mask;
+	}
+	
+	int size() {
+		return get_size(root);
+	}
+	
+	private:
+	int get_size(Node *d) {
+		return d == nullptr ? 0 : d->sz;
 	}
 };
