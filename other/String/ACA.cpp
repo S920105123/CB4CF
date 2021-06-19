@@ -24,7 +24,7 @@ struct ACA {
 		for (int i = 0; i < dict.size(); i++) {
 			int v = 0;
 			for (char ch : dict[i]) {
-				int to = ch - 'a'; // CHANGE THIS !!
+//				int to = ch - 'a'; // CHANGE THIS !!
 				if (trie[v][to] == -1) {
 					trie[v][to] = next[v][to] = new_node(v);
 				}
