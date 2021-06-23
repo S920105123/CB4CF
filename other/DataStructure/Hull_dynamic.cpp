@@ -10,6 +10,7 @@ struct Line {
 	    return b - s->b < (s->m - m) * x;
 	}
 };
+// NEVER USE INSERT!!!! USE insert_line!!
 // Upper envelope, erase cannot be done.
 // Even if you do erase, the popped lines are gone, it won't be a correct hull.
 struct HullDynamic : public multiset<Line> { 
