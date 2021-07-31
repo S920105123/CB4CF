@@ -1,11 +1,13 @@
 struct BIT {
-//	const int RANGE = MAXN;
+//	static const int RANGE = MAXN;
+	int len;
 	LL c[RANGE];
 	void init(int n) {
-		fill(c, c + n + 1, 0);
+		len = n;
+		fill(c, c + len + 1, 0);
 	}
 	void add(int p, LL v) {
-		while (p < RANGE) {
+		while (p <= len) {
 			c[p] += v;
 			p += p & -p;
 		}
@@ -22,4 +24,4 @@ struct BIT {
 		if (l > r) return 0;
 		return get(r) - get(l - 1);
 	}
-} tree;
+};
