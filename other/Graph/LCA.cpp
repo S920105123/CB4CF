@@ -1,6 +1,6 @@
 void init_lca(int vn) {
 	// implement this by yourself
-	// need: pa, din, dout, , use timer as int&
+	// need: pa, din, dout, use timer as int&
 //	int timer = 0; 
 	dfs(1, 1, timer);
 	for (int i = 1; i < LOG; i++) {
