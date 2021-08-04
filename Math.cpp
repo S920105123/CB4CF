@@ -16,12 +16,15 @@ LL mod_inv(LL a, LL mod) {
  
 /* fac, C, H */
 const int LIM = 1000000; // Double for H(n, k)
-LL fac[LIM], finv[LIM];
+LL fac[LIM], finv[LIM], inv[LIM];
 void init_fac(LL mod) {
 	fac[0] = finv[0] = 1;
 	for (int i = 1; i < LIM; i++) {
 		fac[i] = fac[i - 1] * i % mod;
-		finv[i] = qpow(fac[i], mod - 2, mod);
+		inv[i] = i == 1 ? 1 : mod - mod / i * inv[mod % i] % mod;
+	}
+	for (int i = 1; i < LIM; i++) {
+		finv[i] = finv[i - 1] * inv[i] % mod;
 	}
 }
 LL C(LL n, LL k, LL mod) {

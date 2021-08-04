@@ -20,3 +20,13 @@ ll iceil(ll a, ll b){
     if(a > 0) return (a + b - 1) / b;
     else return a / b;
 } 
+
+auto add = [&](int& a, int b) -> void {
+	a += b;
+	a = (a >= MOD ? a - MOD : a);
+};
+auto sub = [&](int& a, int b) -> void {
+	a -= b;
+	a = (a < 0 ? a + MOD : a);
+};
+
