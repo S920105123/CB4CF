@@ -1,82 +1,74 @@
-LL qpow(LL a, LL pw, LL mod) {
-	LL res = 1;
-	a %= mod;
-	while (pw) {
-		if (pw & 1) res = res * a % mod;
-		a = a * a % mod;
-		pw >>= 1;
+// Solve system of linear equations on n variables, 0-based
+// add equation: O(n * min(m, n)), construct solution: O(n * min(m, n)), m: #equations added
+// This template work under modulo G_MOD (change mod_inv if G_MOD is not prime)
+struct Incremental_gauss {
+	static const LL G_MOD = 3;
+	int vn, exist; // #variables, [is a solution exists]
+	vector<vector<LL>> basis;
+	LL mod_inv(LL a) {
+		LL res = 1, pw = G_MOD - 2;
+		while (pw) {
+			if (pw & 1) res = res * a % G_MOD;
+			a = a * a % G_MOD;
+			pw >>= 1;
+		}
+		return res;
 	}
-	return res;
-}
-LL mod_inv(LL a, LL mod) {
-	// for prime
-	return qpow(a, mod - 2, mod);
-}
-
-// Find solution of system of n linear equations, N^3.
-// This template work under modulo PRIME (change mod_inv if needed) 
-// The solution is stored in sol, return -1 if no sol.
-// Otherwise, return the nullity of the system of equations, 0 ==> unique sol, x ==> MOD^x sol
-int gauss(vector<vector<LL>> coe, vector<LL> &sol, LL mod) {
-    // n equations having the form a1x1 + a2x2 + ... + anxn = c.
-    // coe should be an n * (n + 1) matrix, each row is <a1, a2, ..., an, c>.
-    
-    int n = coe.size(), ptr = 0;
-    for (int i = 0; i < n; i++) {
-        int pos = ptr;
-        for (int r = ptr; r < n; r++) {
-            if (coe[r][i] != 0) {
-                pos = r;
-                break;
-            }
-        }
-        if (coe[pos][i] == 0) continue; // target column all zeros
-        
-        swap(coe[pos], coe[ptr]);
-        for (int r = ptr + 1; r < n; r++) {
-            LL mul = coe[r][i] * mod_inv(coe[ptr][i], mod) % mod;
-            for (int c = 0; c < n + 1; c++) {
-                coe[r][c] = (coe[r][c] - coe[ptr][c] * mul) % mod;
-            }
-            assert(coe[r][i] == 0);
-        }
-        ptr++;
-    }
-    
-    // reorder the rows, first non-zero = i ==> go to i-th row.
-    int nul = n;
-    for (int i = n - 1; i >= 0; i--) {
-    	for (int j = 0; j < n; j++) {
-    		if (coe[i][j] != 0) {
-    			swap(coe[i], coe[j]);
-    			nul--;
-    			break;
+	void init(int _vn) {
+		vn = _vn;
+		exist = 1;
+		basis = vector<vector<LL>>(vn, vector<LL>(vn + 1));
+	}
+	void add_equation(vector<LL> eqn) {
+		// a1x1 + a2x2 + ... anxn = a[n+1], ai in [0, mod)
+		assert(eqn.size() == vn + 1);
+		for (int i = 0; i < vn; i++) {
+			if (eqn[i] != 0) {
+				if (basis[i][i] == 0) {
+					basis[i] = eqn;
+					return;
+				}
+				else {
+					LL mul = eqn[i] * mod_inv(basis[i][i]);
+					for (int j = i; j <= vn; j++) {
+						eqn[j] = (eqn[j] - mul * basis[i][j]) % G_MOD;
+						if (eqn[j] < 0)  {
+							eqn[j] += G_MOD;
+						}
+					}
+				}
 			}
 		}
-	}
-
-	// Solution recovery 
-	sol = vector<LL>(n, 0);
-    for (int i = n - 1; i >= 0; i--) {
-        LL sum = coe[i][n] % mod;
-        for (int j = i + 1; j < n; j++) {
-            sum = (sum - coe[i][j] * sol[j]) % mod;
-        }
-        
-        if (coe[i][i] == 0) {
-        	if (sum != 0) {
-        		return -1;
-			}
-        	sol[i] = 0; // or any number % MOD
+		if (eqn[vn] != 0) {
+			exist = 0;
 		}
-        sol[i] = (sum * mod_inv(coe[i][i], mod) % mod + mod) % mod;
-    }
-    return nul;
-}
+	}
+	int solve(vector<LL> &sol) {
+		// return: inf solution ==> -1, no solution ==> 0, unique solution ==> 1
+		if (!exist) {
+			return 0;
+		}
+		int cnt = 0;
+		sol = vector<LL>(vn, 0);
+		for (int i = vn - 1; i >= 0; i--) {
+			if (basis[i][i] != 0) {
+				LL sum = basis[i][vn];
+				for (int j = i + 1; j < vn; j++) {
+					sum = (sum - basis[i][j] * sol[j]) % G_MOD;
+				}
+				if (sum < 0) {
+					sum += G_MOD;
+				}
+				sol[i] = sum * mod_inv(basis[i][i]) % G_MOD;
+				cnt++;
+			}
+		}
+		return (cnt == vn ? 1 : -1);
+	}
+} algo;
 
 
-
-// *********** double gauss ************* //
+// *********** double gauss from cp algo ************* //
 // return: no sol ==> 0, one sol ==> 1, inf sol ==> 2
 const double EPS = 1e-9;
 const int INF_SOLUTION = 2;
