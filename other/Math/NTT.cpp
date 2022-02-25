@@ -1,4 +1,5 @@
-// Do NTT under N_MOD. invert=true to do iNTT.
+
+// Do NTT under MOD. invert=true to do iNTT.
 // mod MUST be a prime, if mod = c*2^k+1, then
 // p_root is any primitive root of mod
 // root_pw=2^k, and n(size) MUST <= 2^k
@@ -21,16 +22,11 @@ LL qpow(LL a, LL pw) {
 	return res;
 }
 
-LL mod_inv(LL a) {
-	// for prime
-	a %= MOD;
-	return qpow(a, MOD - 2);
-}
-
+namespace NTT {
 void ntt(vector<LL> &A, bool invert) {
 	int n = A.size(); 
     LL root = qpow(p_root, (MOD-1)/root_pw);
-	LL root_1 = mod_inv(root);
+	LL root_1 = qpow(root, MOD - 2);
 	for (int i = 1, j = 0; i < n; i++) {
 		LL bit = n >> 1;
 		for (; j & bit; bit >>= 1)
@@ -58,9 +54,25 @@ void ntt(vector<LL> &A, bool invert) {
 	}
 
 	if (invert) {
-		LL n_1 = mod_inv(n);
+		LL n_1 = qpow(n, MOD - 2);
 		for (int i = 0; i < n; i++) {
 			A[i] = A[i] * n_1 % MOD;
 		}
 	}
 }
+
+vector<LL> mul(vector<LL> A, vector<LL> B) {
+	int sz = 1, a = A.size(), b = B.size();
+	while (sz < a + b - 1) {
+		sz *= 2;
+	}
+	A.resize(sz); B.resize(sz);
+	ntt(A, 0); ntt(B, 0);
+	for (int i = 0; i < sz; i++) {
+		A[i] = A[i] * B[i] % MOD;
+	}
+	ntt(A, 1);
+	A.resize(a + b - 1);
+	return A;
+}
+};
