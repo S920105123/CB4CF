@@ -5,5 +5,7 @@ vector<LL> Stirling_number_of_second_kind(int n) {
 		A[i] = qpow(i, n) * finv[i] % MOD;
 		B[i] = ((i & 1 ? MOD - 1 : 1)) * finv[i] % MOD;
 	}
-	return NTT::mul(A, B);
+	A = NTT::mul(A, B);
+	A.resize(n + 1); 
+	return A;
 }
