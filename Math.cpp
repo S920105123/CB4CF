@@ -1,17 +1,12 @@
-LL qpow(LL a, LL pw, LL mod) {
+LL qpow(LL a, LL pw) {
 	LL res = 1;
-	a %= mod;
+	a %= MOD;
 	while (pw) {
-		if (pw & 1) res = res * a % mod;
-		a = a * a % mod;
+		if (pw & 1) res = res * a % MOD;
+		a = a * a % MOD;
 		pw >>= 1;
 	}
 	return res;
-}
-LL mod_inv(LL a, LL mod) {
-	// for prime
-	a %= mod;
-	return qpow(a, mod - 2, mod);
 }
  
 /* fac, C, H */
