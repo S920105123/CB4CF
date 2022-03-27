@@ -9,6 +9,14 @@ LL qpow(LL a, LL pw) {
 	return res;
 }
  
+void add(LL &x, LL y) {
+	x += y;
+	if (x >= MOD) {
+		x -= MOD;
+	}
+	x %= MOD;
+}
+ 
 /* fac, C, H */
 const int LIM = 1000000; // Double for H(n, k)
 LL fac[LIM], finv[LIM], inv[LIM];
