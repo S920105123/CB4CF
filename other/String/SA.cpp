@@ -1,8 +1,9 @@
  
-struct SA {
+struct SA { 
     /* sa: sorted suffices, rank: rank of text[i] */
     /* lcp: lcp[i] = LCP(sa[i], sa[i-1]), lcp[0] = 0 */
     // Init is included in build
+    // 0-indexed, NO NEED to add $
 //    static const int MAXL = 1000005;
     string text;
     int sa[MAXL], rank[MAXL], lcp[MAXL], cnt[MAXL];
