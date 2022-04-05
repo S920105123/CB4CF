@@ -10,6 +10,8 @@ struct Line {
 	    return b - s->b < (s->m - m) * x;
 	}
 };
+// THIS DATASTRUCTURE DOES NOT SUPPORT std::move!!!
+// use pointers to implement move by yourself
 // NEVER USE INSERT!!!! USE insert_line!!
 // Upper envelope, erase cannot be done.
 // Even if you do erase, the popped lines are gone, it won't be a correct hull.
