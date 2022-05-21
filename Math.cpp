@@ -18,7 +18,7 @@ void add(LL &x, LL y) {
 }
  
 /* fac, C, H */
-const int LIM = 1000000; // Double for H(n, k)
+const int LIM = 1000005; // Double for H(n, k)
 LL fac[LIM], finv[LIM], inv[LIM];
 void init_fac() {
 	fac[0] = finv[0] = 1;

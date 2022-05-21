@@ -1,6 +1,6 @@
 
 // extgcd & CRT
-pair<LL, LL> ext_gcd( LL a, LL b) {
+pair<LL, LL> ext_gcd(LL a, LL b) {
 	if (b == 0) return make_pair(1, 0);
     if (a % b == 0) return make_pair(0, 1);
     pair<LL, LL> t = ext_gcd(b, a % b);
@@ -11,7 +11,7 @@ pair<LL, LL> ext_gcd( LL a, LL b) {
 /* gcd based inv
 LL mod_inv(LL x, LL mod) { // gcd(x,mod) must be 1
 	x %= mod;
-    return (ext_gcd(x,mod).first % mod + mod) % mod;
+    return (ext_gcd(x, mod).first % mod + mod) % mod;
 }
 */
 

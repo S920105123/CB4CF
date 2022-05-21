@@ -29,7 +29,7 @@ struct Incremental_gauss {
 					return;
 				}
 				else {
-					LL mul = eqn[i] * mod_inv(basis[i][i]);
+					LL mul = eqn[i] * mod_inv(basis[i][i]) % G_MOD;
 					for (int j = i; j <= vn; j++) {
 						eqn[j] = (eqn[j] - mul * basis[i][j]) % G_MOD;
 						if (eqn[j] < 0)  {
