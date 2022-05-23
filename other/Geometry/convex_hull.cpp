@@ -10,6 +10,9 @@ struct Point {
 
 vector<Point> convex_hull(vector<Point> ps) {
 	// Find convex hull of ps, store in hull
+	if (ps.size() <= 1) {
+		return ps;
+	}
 	vector<Point> H(ps.size() + 1);
 	sort(ps.begin(), ps.end(), [&] (const Point &a, const Point &b) {
 		return a.x < b.x || (a.x == b.x && a.y < b.y);
@@ -23,7 +26,7 @@ vector<Point> convex_hull(vector<Point> ps) {
 		H[++t] = ps[i];
 	}
 	int low = t;
-	for (int i = ps.size() - 2; i >= 0; i--) {
+	for (int i = (int)ps.size() - 2; i >= 0; i--) {
 		// cross<-EPS -> count collinear, cross<EPS -> not
 		while (t > low && (H[t] - H[t - 1]).cross(ps[i] - H[t]) < EPS) {
 			t--;
