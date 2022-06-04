@@ -60,7 +60,7 @@ struct SA {
     		if (rank[i] == 0) continue;
     		len = max(0, len - 1);
     		int j = sa[rank[i] - 1];
-    		while (text[i + len] == text[j + len]) len++;
+    		while (max(i, j) + len < sz && text[i + len] == text[j + len]) len++;
     		lcp[rank[i]] = len;
     	}
     }

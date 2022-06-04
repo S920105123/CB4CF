@@ -14,7 +14,6 @@ void add(LL &x, LL y) {
 	if (x >= MOD) {
 		x -= MOD;
 	}
-	x %= MOD;
 }
  
 /* fac, C, H */
