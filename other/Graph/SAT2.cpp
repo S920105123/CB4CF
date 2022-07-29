@@ -1,5 +1,5 @@
 struct SAT2 {
-//	static const int MAXV = MAXN; // number of variables
+//	static const int MAXV = 1000005; // number of variables
 	int vn, sid[MAXV*2]; // 1-based
 	bool vis[MAXV*2], sol[MAXV]; // 1 if i is true
 	vector<int> stk, G[MAXV*2], Gr[MAXV*2];
